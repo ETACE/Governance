@@ -7,45 +7,25 @@
 #define EPSILON 1e-12	//epsilon small for checking div zero
 #define MAXI 1e+9
 #include <time.h>
+/*
+* Function executed at launch to set up specific memory variables
+*/
+
 int Manager_init(){
-
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
-
-	
-	
-
-
+ 
 
 	TAX_RATE_CORPORATE = CONST_GENERAL_TAX_RATE;
-
 	TAX_RATE_INCOME = CONST_GENERAL_TAX_RATE;
-
 	MANAGER_FIX_INCOME  = CONST_MANAGER_FIX_INCOME;
-
 	NO_OUTSTANDING_SHARES = CONST_INITIAL_NUMBER_OF_SHARES;
-
-
 	FRACTION_SHARES_LONGTERM_INVESTORS = CONST_SHARES_LONGTERMISTS;
-
 	NO_SHARES_HOLD_BY_LONGTERM_INVESTORS = FRACTION_SHARES_LONGTERM_INVESTORS*NO_OUTSTANDING_SHARES;
-
-
 	SHORT_TERM_CAPITAL_GAIN_TAX_RATE = CONST_GENERAL_TAX_RATE;
-
 	LONG_TERM_CAPITAL_GAIN_TAX_RATE = CONST_GENERAL_TAX_RATE;
-
 	SHORT_TERM_CAPITAL_GAIN_ON_DIVIDEND_TAX_RATE = CONST_GENERAL_TAX_RATE;
 	LONG_TERM_CAPITAL_GAIN_ON_DIVIDEND_TAX_RATE = CONST_GENERAL_TAX_RATE;
-
 	MARGINAL_COSTS = WAGE / PRODUCTIVITY;
 	PRICE = (1+CONST_MARK_UP)*MARGINAL_COSTS;
-
 	INFLUENCE_MANAGER = CONST_INFLUENCE_MANAGER;
 	INFLUENCE_LONGTERM_INVESTORS =  (1- CONST_INFLUENCE_MANAGER)*FRACTION_SHARES_LONGTERM_INVESTORS;
 	INFLUENCE_SHORTTERM_INVESTORS =  (1- CONST_INFLUENCE_MANAGER)*(1-FRACTION_SHARES_LONGTERM_INVESTORS);
@@ -53,32 +33,16 @@ start = clock();
 	add_init_info_message(ID, PRICE, PRODUCTIVITY);
 
 
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used Manager_init  of ID %d  %f \n",ID, cpu_time_used);
-
-
-
-
 	return 0;
 
 }
 
 
-
+/*
+* Function executed to initialize competitors in the internal memory
+*/
 
 int Manager_init2(){
-
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
-
-
 
 
 	START_INIT_INFO_MESSAGE_LOOP
@@ -96,27 +60,15 @@ start = clock();
 
 
 
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used Manager_init2  of ID %d  %f \n",ID, cpu_time_used);
-
-
-
 
 	return 0;
 }
 
+
+/*
+* Function to determine the current dividends
+*/
 int Manager_set_dividend(){
-
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
-
 
 
 	//Compute dividends as pct from the liquid assets
@@ -135,32 +87,14 @@ start = clock();
 
 	add_double(&DIVIDEND_LONG_HISTORY,DIVIDEND_PER_SHARE);
 
-
-
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used  Manager_set_dividend  of ID %d  %f \n",ID, cpu_time_used);
-
-
-
-
 	return 0;
 }
 
-
+/*
+* Function to set variables at the beginning of each period
+*/
 
 int Manager_set_variables(){
-
-
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
-
 
 
 	double average_productivity = 0.0;
@@ -225,26 +159,12 @@ start = clock();
 
 	FUNDAMENTAL_VALUE =  (DIVIDEND_EXPECTATIONS*(1-SHORT_TERM_CAPITAL_GAIN_ON_DIVIDEND_TAX_RATE) + FUNDAMENTAL_VALUE*(1-FRACTION_OPTIMISTS*SHORT_TERM_CAPITAL_GAIN_TAX_RATE) - cara_coeff*CARA_VARIANCE * (1-FRACTION_SHARES_LONGTERM_INVESTORS)*NO_OUTSTANDING_SHARES)/(1-FRACTION_OPTIMISTS*SHORT_TERM_CAPITAL_GAIN_TAX_RATE + CONST_INTEREST_RATE*(1-TAX_RATE_INCOME));
 
-	//FUNDAMENTAL_VALUE =  0.5*FUNDAMENTAL_VALUE + (1-0.5)* DIVIDEND_PER_SHARE/CONST_INTEREST_RATE;
-
-
-	if(FUNDAMENTAL_VALUE>0.0){
-
-		//if(SHARE_PRICE -FUNDAMENTAL_VALUE>0)
-		//	FRACTION_SHARES_LONGTERM_INVESTORS = min(1.0,max(0.0,FRACTION_SHARES_LONGTERM_INVESTORS +  (-1)*CONST_ADJUST_SHARE_LONGTERMISTS*pow(SHARE_PRICE /FUNDAMENTAL_VALUE-1,2)));
-		//else
-		//	FRACTION_SHARES_LONGTERM_INVESTORS = min(1.0,max(0.0,FRACTION_SHARES_LONGTERM_INVESTORS +  CONST_ADJUST_SHARE_LONGTERMISTS*pow(SHARE_PRICE /FUNDAMENTAL_VALUE-1,2)));
-
-		//FRACTION_SHARES_LONGTERM_INVESTORS = min(1.0,max(0.0,FRACTION_SHARES_LONGTERM_INVESTORS -  CONST_ADJUST_SHARE_LONGTERMISTS*(SHARE_PRICE /FUNDAMENTAL_VALUE - AVERAGE_RATIO_SHARE_PRICE_FUNDAMENTAL_VALUE)));
-
-
-
-	}
 
 	double g_share_price = 0.0;
 	double g_dividend = 0.0;
 
 
+	//Possibility to adjust the fraction of shares held by LTI; parameter ist set to 0 by default
 	if(HISTORY_TIME_WINDOW == DIVIDEND_LONG_HISTORY.size && DAY > CONST_TRANSITION_PHASE){
 
 
@@ -270,42 +190,28 @@ start = clock();
 	RATIO_SHARE_PRICE_FUNDAMENTAL_VALUE = g_share_price - g_dividend;
 
 
-
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used Manager_set_variables  of ID %d  %f \n",ID, cpu_time_used);
-
-
-
 	return 0;
 }
 
 
 
-
+/*
+* Function to set the optimal real investments and buybacks
+*/
 
 int Manager_set_buyback_and_real_investment(){
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
-
 
 
 		double budget_constraint_old = BUDGET_CONSTRAINT;
 		double real_investment_old = REAL_INVESTMENT;
 
-
-
 		double delta_share_price = (SHARE_PRICE_HISTORY[0] - SHARE_PRICE_HISTORY[1])/SHARE_PRICE_HISTORY[1];
 
 
+		//This is to delete the firm in case the firm cannot pay the fixed costs
 		if(SAVINGS < MANAGER_FIX_INCOME)
 			return 1;
+		
 		BUDGET_CONSTRAINT = max(0.0,SAVINGS - MANAGER_FIX_INCOME);
 
 
@@ -317,7 +223,7 @@ start = clock();
 
 		double growth_expectation = 1.0;
 
-		/*TODO  Check if we have to remove delta_share_price later*/
+		
 		X1 = DIVIDEND_EXPECTATIONS*(1-SHORT_TERM_CAPITAL_GAIN_ON_DIVIDEND_TAX_RATE) + SHARE_PRICE*growth_expectation*(1-FRACTION_OPTIMISTS*SHORT_TERM_CAPITAL_GAIN_TAX_RATE) - cara_coeff*CARA_VARIANCE * (1-FRACTION_SHARES_LONGTERM_INVESTORS)*NO_OUTSTANDING_SHARES;
 
 		X1 = max(0,X1);
@@ -372,7 +278,9 @@ start = clock();
 
 		SUBSTITUTION_EFFECT = 0.0;
 		RESOURCE_EFFECT = 0.0;
-
+			
+			
+		// Variables used for analysis
 		if(budget_constraint_old >0  && BUDGET_CONSTRAINT>0 ){
 			//SUBSTITUTION_EFFECT = (budget_constraint_old - REAL_INVESTMENT)/(BUDGET_CONSTRAINT - REAL_INVESTMENT);
 			//RESOURCE_EFFECT = (BUDGET_CONSTRAINT - budget_constraint_old)/(BUDGET_CONSTRAINT - REAL_INVESTMENT);
@@ -393,26 +301,14 @@ start = clock();
 		}
 
 
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used  Manager_set_buyback_and_real_investment  of ID %d  %f \n",ID, cpu_time_used);
-
-
 return 0;
 }
 
+/*
+* Function to set the financial market interactions
+*/
 
 int Manager_financial_market_interaction(){
-
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
-
 
 
 	//Determine the share price after placing the buybacks on the market
@@ -420,19 +316,21 @@ start = clock();
 
 		SHARE_PRICE_HISTORY[1] = SHARE_PRICE_HISTORY[0];
 
-
+		//New share price
 		SHARE_PRICE = (X1 + sqrt(pow(X1,2)+ 4*(1-FRACTION_OPTIMISTS*SHORT_TERM_CAPITAL_GAIN_TAX_RATE + CONST_INTEREST_RATE*(1-TAX_RATE_INCOME))*X2*BUYBACK))/(2*(1-FRACTION_OPTIMISTS*SHORT_TERM_CAPITAL_GAIN_TAX_RATE + CONST_INTEREST_RATE*(1-TAX_RATE_INCOME)));
 
 
-
+		// Determine the number of bought back shares
 		BOUGHT_BACK_SHARES = BUYBACK/SHARE_PRICE;
 
+		// New number of oustanding shares
 		NO_OUTSTANDING_SHARES = NO_OUTSTANDING_SHARES - BUYBACK/SHARE_PRICE;
 
 		NO_SHARES_HOLD_BY_LONGTERM_INVESTORS = FRACTION_SHARES_LONGTERM_INVESTORS*NO_OUTSTANDING_SHARES;
 
 		if(DAY>100){
 
+			// Possibility to consider options instead of shares; not used in the paper
 			if(SHARE_PRICE> SHARE_PRICE_HISTORY[1]){
 
 
@@ -473,29 +371,14 @@ start = clock();
 		SAVINGS -= BUYBACK;
 
 
-
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used  Manager_financial_market_interaction  of ID %d  %f \n",ID, cpu_time_used);
-
-
-
-
 return 0;
 }
 
 
+/*
+* Function to carry out R&/D activities
+*/
 int Manager_execute_real_investment(){
-
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
-
 
 
 
@@ -511,9 +394,9 @@ start = clock();
 	 double random_draw = random_unif();
 
 	// printf("DAY %d ID %d  PRODUCTIVITY %f  INNOVTION_ARRIVAL_RATE %f TECH_PROGRESS_GROWTH_RATE %f   SHARE_PRICE %f   	No_SHARES %f\n",DAY,ID ,PRODUCTIVITY,INNOVTION_ARRIVAL_RATE, TECH_PROGRESS_GROWTH_RATE,SHARE_PRICE,NO_OUTSTANDING_SHARES);
-
-if(random_draw < INNOVTION_ARRIVAL_RATE && DAY > CONST_TRANSITION_PHASE )
-   PRODUCTIVITY = (1+TECH_PROGRESS_GROWTH_RATE) * PRODUCTIVITY;
+	//If innovation draw is successful 
+	if(random_draw < INNOVTION_ARRIVAL_RATE && DAY > CONST_TRANSITION_PHASE )
+   		PRODUCTIVITY = (1+TECH_PROGRESS_GROWTH_RATE) * PRODUCTIVITY;
 
 
 
@@ -521,64 +404,31 @@ if(random_draw < INNOVTION_ARRIVAL_RATE && DAY > CONST_TRANSITION_PHASE )
 
 }
 
-
-
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used Manager_execute_real_investment  of ID %d  %f \n",ID, cpu_time_used);
-
-
-
 return 0;
 }
 
-
+/*
+* Function to set the new price 
+*/
 int Manager_set_price(){
 
 
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
-
-
-
-
 	MARGINAL_COSTS = WAGE / PRODUCTIVITY;
+	// Mark-up pricing
 	PRICE = (1+CONST_MARK_UP)*MARGINAL_COSTS;
 
 	add_competitor_info_message(ID, PRICE, PRODUCTIVITY,RATIO_SHARE_PRICE_FUNDAMENTAL_VALUE);
 
 
 
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used  Manager_set_price  of ID %d  %f \n",ID, cpu_time_used);
-
-
-
 return 0;
 }
 
 
-
+/*
+* Function to collect data from the goods market
+*/
 int Manager_receive_goods_market_signals(){
-
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
-
-
-
 
 
 	reset_competitor_array(&COMPETITORS);
@@ -625,28 +475,14 @@ start = clock();
 	}
 
 
-
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used  Manager_receive_goods_market_signals  of ID %d  %f \n",ID, cpu_time_used);
-
-
-
 return 0;
 }
 
+/*
+* Function to set the goods market interactions
+*/
+
 int Manager_goods_market_interaction(){
-
-
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
-
 
 
 	OUTPUT = Manager_demand_function(PRICE, COMPETITORS, MARKET_SIZE, CONST_ELASTICITY_SUBSTITUTION);
@@ -704,16 +540,12 @@ start = clock();
 	}
 
 
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used Manager_goods_market_interaction  of ID %d  %f \n",ID, cpu_time_used);
-
-
-
 return 0;
 }
 
+/*
+* Function to set the tax payment
+*/
 int Manager_tax_accounting(){
 
 	TAX_PAYMENT_CORPORATE = max(0,TAX_RATE_CORPORATE*(OPERATING_PROFIT - CONST_TAX_DEDUCTION_INVESTMENTS*REAL_INVESTMENT));
@@ -723,16 +555,10 @@ int Manager_tax_accounting(){
 return 0;
 }
 
+/*
+* Function to set and payout the manager's remunertaion
+*/
 int Manager_realize_remuneration(){
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
-
-
 
 
 
@@ -757,26 +583,15 @@ start = clock();
 
 
 
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used  Manager_realize_remuneration  of ID %d  %f \n",ID, cpu_time_used);
-
-
-
 return 0;
 }
 
+/*
+* Function transition of savings in the next period; receive interests
+*/
 
 int Manager_update_saving(){
 
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
 
 
 
@@ -788,27 +603,14 @@ start = clock();
 
 
 
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used Manager_update_saving  of ID %d  %f \n",ID, cpu_time_used);
-
-
-
 return 0;
 }
 
+/*
+* Function to update the policy variables
+*/
+
 int Manager_policy_update(){
-
-
-
-   clock_t start, end;
-     double cpu_time_used;
-
-start = clock();
-
-
-
 
 
 	START_POLICY_MESSAGE_LOOP
@@ -828,12 +630,6 @@ start = clock();
 
 	FINISH_POLICY_MESSAGE_LOOP
 
-
-
- end = clock();
-     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-printf("Time used  Manager_policy_update  of ID %d  %f \n",ID, cpu_time_used);
 
 
 
