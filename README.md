@@ -34,39 +34,36 @@ Make sure to have cunit and gsl installed.
 
 On top of the repo root directory, download libmboard 0.3.1 (https://github.com/FLAME-HPC/libmboard/archive/0.3.1.tar.gz) and extract the tarball
 
-mkdir libmboard
-cd libmboard-0.3.1
-chmod +x autogen.sh
-./autogen.sh
+    mkdir libmboard
+    cd libmboard-0.3.1
+    chmod +x autogen.sh
+    ./autogen.sh
 
 Remove --disable-parallel if you have mpi installed
 
-./configure --prefix=$(cd ../libmboard; pwd) --disable-parallel
-make
-make install
-
-back to the repo root directory
-cd ..
+    ./configure --prefix=$(cd ../libmboard; pwd) --disable-parallel
+    make
+    make install
+    #back to the repo root directory
+    cd ..
 
 3. Install xparser
 
 Download xparser 0.17.1 (https://github.com/FLAME-HPC/xparser/archive/0.17.1.tar.gz) and extract to xparser/ directory on top of the repo root directory.
 
-cd xparser
-make
-
-back to the repo root directory
-
-cd ..
+    cd xparser
+    make
+    #back to the repo root directory
+    cd ..
 
 4. Generate makefile for the model
-
-cd xparser
-./xparser ../model.xml
+    
+        cd xparser
+        ./xparser ../model.xml
 
 back to the repo root directory
 
-cd ..
+    cd ..
 
 5. Build the model
 
