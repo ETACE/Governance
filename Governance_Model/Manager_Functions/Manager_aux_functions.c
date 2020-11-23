@@ -97,7 +97,7 @@ double return_rank(competitor_array competitors){
 }
 
 
-
+/*Demand function; rteturns the current demand given the current competitors' characteristics as well as the market size and the elasticity of substitution*/
 double Manager_demand_function(double p, competitor_array competitors, double m, double rho){
 
 	double d = 0.0;
@@ -119,7 +119,7 @@ double Manager_demand_function(double p, competitor_array competitors, double m,
 }
 
 
-
+/*Aux function to determine a reasonable range for the initial share price*/
 double Manager_determine_initial_shareprice(){
 
 	double shareprice;
@@ -134,6 +134,7 @@ double Manager_determine_initial_shareprice(){
 
 }
 
+/*Profit function given a productivity level*/
 double Manager_profit_function(double prod){
 
 
@@ -149,7 +150,7 @@ double Manager_profit_function(double prod){
 }
 
 
-
+/*structure for investment function*/
 struct implicit_investment_function_params
   {
 
@@ -159,7 +160,7 @@ struct implicit_investment_function_params
   };
 
 
-
+/*Implicit investment function*/
 double Manager_implicit_investment_function (double x, void *params)
 {
   struct implicit_investment_function_params *p
@@ -282,10 +283,7 @@ double Manager_implicit_investment_function (double x, void *params)
 }
 
 
-
-
-
-
+/*Root solver for investment function*/
 double Manager_implicit_investment_function_root_solver( double dpi,double x1,double x2, double budget ){
 
 
