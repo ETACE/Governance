@@ -3,6 +3,7 @@
 #include "my_library_header.h"
 
 
+/*Init function to set the initial values of tax rates*/
 int Government_init(){
 
 
@@ -23,7 +24,7 @@ int Government_init(){
 }
 
 
-
+// Update tax rates (Not done in the paper)
 int Government_set_policy(){
 
 
