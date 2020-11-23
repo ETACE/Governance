@@ -58,11 +58,8 @@ Download xparser 0.17.1 (https://github.com/FLAME-HPC/xparser/archive/0.17.1.tar
 
 4. Generate makefile for the model
     
-        cd xparser
-        ./xparser ../model.xml
-
-back to the repo root directory
-
+    cd xparser./xparser ../model.xml
+    #back to the repo root directory
     cd ..
 
 5. Build the model
