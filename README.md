@@ -1,5 +1,5 @@
 # Governance
-Code to the paper "Governance structure, technical change and industry competition" by M. Guerini, P. Harting and M. Napoletano
+Here we supply the code to the paper "Governance structure, technical change and industry competition" by M. Guerini, P. Harting and M. Napoletano. The tagged code for the working paper can be found as tag WP.
 
 
 # Dependencies
