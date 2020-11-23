@@ -1,6 +1,7 @@
 # Governance
 Here we supply the code to the paper "Governance structure, technical change and industry competition" by M. Guerini, P. Harting and M. Napoletano. The tagged code for the working paper can be found as tag WP.
 
+The working paper can be found at this link: http://www.lem.sssup.it/WPLem/files/2020-35.pdf
 
 # Dependencies
 
