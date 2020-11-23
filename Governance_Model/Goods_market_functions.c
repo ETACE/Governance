@@ -3,39 +3,29 @@
 #include "my_library_header.h"
 #include <time.h>
 
+/* Init functio
+*/
 int Goods_market_init(){
 
-	clock_t start, end;
-	     double cpu_time_used;
-	     start = clock();
-
-
-
+	//Here we set the pessimists' expected price effect of buybacks to 2/3 of that of optimists
 	FLAME_environment_variable_const_impact_buybacks_shareprice_pessimists = (-1)*0.66666667*FLAME_environment_variable_const_impact_buybacks_shareprice_optimists;
 	
-	end = clock();
-		     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 
-		     printf("Time used: %f\n", cpu_time_used);
 
 return 0;
 }
 
 
-
+/* Dertermine certain variables
+*/
 int Goods_market_update(){
 
-
-	clock_t start, end;
-	     double cpu_time_used;
-	     start = clock();
-
-
-
+	//New industry wide wage level: linked to productivity
 	WAGE_LEVEL = AVERAGE_PRODUCTIVITY*CONST_WAGE_ADJUSTMENT;
 
 	AV_PRODUCTIVITY_GROWTH=0.0;
 
+	// Change in market size according to an AR1 process: not used 
 	EPSILON_MARKET_SIZE = CONST_AUTOCORR_MARKET_SIZE* EPSILON_MARKET_SIZE + normal_distributed_double()* CONST_STD_MARKET_SIZE;
 
 
@@ -48,105 +38,67 @@ int Goods_market_update(){
 
 		AV_PRODUCTIVITY_GROWTH = AV_PRODUCTIVITY_GROWTH/(AVERAGE_PRODUCTIVITIES.size-1);
 	}
-
+	//send info to firms
 	add_market_info_message(MARKET_SIZE, WAGE_LEVEL, AV_PRODUCTIVITY_GROWTH);
-
-	end = clock();
-		     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-		     printf("Time used: %f\n", cpu_time_used);
 
 	return 0;
 }
 
-
+/*Comnpute a range of market and firm statistics. This done here to save disk space and to speed up post-simulation data processing*/
 int Goods_market_compute_statistic(){
-
-
-	clock_t start, end;
-	     double cpu_time_used;
-	     start = clock();
-
 
 	int counter = 0;
 
 	AVERAGE_PRODUCTIVITY = 0.0;
 	AVERAGE_PRODUCTIVITY_WEIGHTED = 0.0;
-
 	SUM_DIVIDENDS = 0.0;
-
 	TOTAL_OUTPUT = 0.0;
-
 	HERFINDAHL_INDEX = 0.0;
+	SUM_REAL_INVESTMENTS = 0.0;
+	SUM_BUYBACKS = 0.0;
+	AV_REAL_INVESTMENTS = 0.0;
+	AV_BUYBACKS = 0.0;
+	AV_SHARE_REAL_INVESTMENT= 0.0;
+	AV_SHARE_PRICE= 0.0;
+	NO_SHARES_OUTSTANDING= 0.0;
+	FRONTIER = 0;
+	MEAN_SQUARED_RANKS = 0.0;
 
-
-    SUM_REAL_INVESTMENTS = 0.0;
-
-    SUM_BUYBACKS = 0.0;
-
-    AV_REAL_INVESTMENTS = 0.0;
-
-    AV_BUYBACKS = 0.0;
-
-    AV_SHARE_REAL_INVESTMENT= 0.0;
-
-    AV_SHARE_PRICE= 0.0;
-
-    NO_SHARES_OUTSTANDING= 0.0;
-
-    FRONTIER = 0;
-
-    MEAN_SQUARED_RANKS = 0.0;
-
+	// Read data from firms
 	START_OUTPUT_INFO_MESSAGE_LOOP
 
 	counter++;
 
 	TOTAL_OUTPUT+= output_info_message->output;
-
 	AVERAGE_PRODUCTIVITY_WEIGHTED += (output_info_message->output*output_info_message->productivity);
-
 	AVERAGE_PRODUCTIVITY += output_info_message->productivity;
+	SUM_REAL_INVESTMENTS += output_info_message->real_investment;
+	SUM_BUYBACKS += output_info_message->buyback;
+	AV_REAL_INVESTMENTS += output_info_message->real_investment;
+	AV_BUYBACKS += output_info_message->buyback;
+	SUM_DIVIDENDS += output_info_message->dividends;
+	AV_SHARE_PRICE += output_info_message->share_price;
+	NO_SHARES_OUTSTANDING += output_info_message->no_shares_outstanding;
 
-    SUM_REAL_INVESTMENTS += output_info_message->real_investment;
+	if(output_info_message->real_investment + output_info_message->buyback>0)
+    		AV_SHARE_REAL_INVESTMENT += output_info_message->real_investment/(output_info_message->real_investment + output_info_message->buyback);
 
-    SUM_BUYBACKS += output_info_message->buyback;
-
-    AV_REAL_INVESTMENTS += output_info_message->real_investment;
-
-    AV_BUYBACKS += output_info_message->buyback;
-
-    SUM_DIVIDENDS += output_info_message->dividends;
-
-    if(output_info_message->real_investment + output_info_message->buyback>0)
-    	AV_SHARE_REAL_INVESTMENT += output_info_message->real_investment/(output_info_message->real_investment + output_info_message->buyback);
-
-
-    if(output_info_message->productivity> FRONTIER)
-    	FRONTIER = output_info_message->productivity;
-
-
-    AV_SHARE_PRICE += output_info_message->share_price;
-
-    NO_SHARES_OUTSTANDING += output_info_message->no_shares_outstanding;
-
+	if(output_info_message->productivity> FRONTIER)
+    		FRONTIER = output_info_message->productivity;
 
 
 	FINISH_OUTPUT_INFO_MESSAGE_LOOP
 
 	START_OUTPUT_INFO_MESSAGE_LOOP
 
+	//Compute Herfindahl
 	HERFINDAHL_INDEX += pow(output_info_message->output/TOTAL_OUTPUT ,2);
 
 
 	FINISH_OUTPUT_INFO_MESSAGE_LOOP
 
-
-
-
-
+	//Store the last 200 values of the HHI
 	if(ARR_HERFINDAHL_INDEX.size == 200){
-
 
 		remove_double(&ARR_HERFINDAHL_INDEX,0);
 
@@ -197,21 +149,13 @@ int Goods_market_compute_statistic(){
 	  AV_ANNUAL_PRODUCTIVITY_GROWTH_500 = pow((ARR_AV_PRODUCTIVITY.array[ARR_AV_PRODUCTIVITY.size-1]/ARR_AV_PRODUCTIVITY.array[0]),(4.0/((ARR_AV_PRODUCTIVITY.size))))-1;
 	  WEIGHTED_ANNUAL_PRODUCTIVITY_GROWTH_500 = pow((ARR_WEIGHTED_PRODUCTIVITY.array[ARR_WEIGHTED_PRODUCTIVITY.size-1]/ARR_WEIGHTED_PRODUCTIVITY.array[0]),(4.0/((ARR_AV_PRODUCTIVITY.size))))-1;
 
-
-
-
+	 //Compute averages
 	  AV_REAL_INVESTMENTS = AV_REAL_INVESTMENTS/counter;
-
 	  AV_BUYBACKS = AV_BUYBACKS/counter;
-
 	  AV_SHARE_REAL_INVESTMENT= AV_SHARE_REAL_INVESTMENT/counter;
-
 	  AV_SHARE_PRICE= AV_SHARE_PRICE/counter;
-
 	  NO_SHARES_OUTSTANDING= NO_SHARES_OUTSTANDING/counter;
-
 	  AV_PRODUCTIVITY_GAP =  AVERAGE_PRODUCTIVITY /FRONTIER;
-
 	  RATIO_BUYBACKS_DIVIDENDS = SUM_BUYBACKS / SUM_DIVIDENDS;
 
 
@@ -267,12 +211,6 @@ int Goods_market_compute_statistic(){
 	  	}
 
 	add_double(&AVERAGE_PRODUCTIVITIES, AVERAGE_PRODUCTIVITY);
-
-
-	end = clock();
-		     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-		     printf("Time used: %f\n", cpu_time_used);
 
 
 	//printf("HERFINDAHL_INDEX %f",HERFINDAHL_INDEX);
