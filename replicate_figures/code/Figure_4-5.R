@@ -1,10 +1,8 @@
 # Title:    Replication file for Fig. 4 and 5
 # Authors:  MG-PH-MN
-# Version:  2020 December 14
+# Version:  2020 December 18
 
-library(tseries)
 library(tidyverse)
-library(ggtern)
 library(viridis)
 library(RColorBrewer)
 library(reshape2)
@@ -12,10 +10,11 @@ library(reshape2)
 rm(list = ls())
 
 # import and clean data --------------------------------------------------------
-setwd("~/Documents/GitHub/Governance/replicate_figures/data/")
-load("data_time_evolution.Rdata")
+setwd("~/Google Drive/2019_buybackFinancialization/Replication/")
+load("data_sim_experiment.Rdata")
 
-rm(i, p1, p2, par1, par2, parameter1, parameter2, pathdata, pathfigs, probe, runs, parameter_list)
+rm(i, p0, p1, p2, par0, par1, par2, parameter0, parameter1, parameter2, pathdata, 
+   num_procs, runs, parameter_list, getdata, retrieve_data)
 
 data <- DATA
 rm(DATA)
@@ -24,9 +23,10 @@ rm(DATA)
 runs <- max(data$r)
 log <- FALSE
 
-check_stationarity = FALSE
+check_stationarity <- TRUE
 time <-c(2500, 10000, 50000)
 
+par0 <- c("0.001", "0.01", "0.1")
 par1 <- c("0.0","0.01","0.02","0.04","0.06","0.08",
           "0.1", "0.12","0.14","0.16","0.18",
           "0.2","0.22","0.24","0.26","0.28",
@@ -37,10 +37,11 @@ par1 <- c("0.0","0.01","0.02","0.04","0.06","0.08",
           "0.7","0.72","0.74","0.76","0.78",
           "0.8","0.82","0.84","0.86","0.88",
           "0.9","0.92","0.94","0.96","0.98","1.0")
-par2 <- par1
+par2 <- c("0.1", "0.5", "0.9")
 
 data <- data %>%
-  filter(t %in% time)
+  filter(t %in% time) %>% 
+  filter(par0 == "0.01")
 
 # splines for the productivity growth ------------------------------------------
 variable <- "annual_growth_weighted_productivity"
@@ -110,8 +111,12 @@ TEMP <- TEMP_ALL_SPLINE_PROD %>%
   mutate(y = y/(y+z)) %>%
   setNames(c("Manager.autonomy", "Ownership.LTI", "Ownership.STI", "Prod.Growth", "time"))
 
+# decide whether to remove corner
+TEMP2 <- TEMP %>%
+  filter(Ownership.LTI > 0.02)
+
 # plot it
-ggplot(TEMP, aes(x=Ownership.LTI, y=Prod.Growth, group=Manager.autonomy, col=Manager.autonomy)) +
+ggplot(TEMP2, aes(x=Ownership.LTI, y=Prod.Growth, group=Manager.autonomy, col=Manager.autonomy)) +
   facet_wrap(time~., nrow=1) +
   geom_smooth(method = "loess", se = F) +
   scale_color_manual(values = c("red", "blue", "black")) +
@@ -191,8 +196,12 @@ TEMP <- TEMP_ALL_SPLINE_HHI %>%
   mutate(y = y/(y+z)) %>%
   setNames(c("Manager.autonomy", "Ownership.LTI", "Ownership.STI", "HHI", "time"))
 
+# decide whether to remove corner
+TEMP2 <- TEMP %>%
+  filter(Ownership.LTI > 0.02)
+
 # plot it
-ggplot(TEMP, aes(x=Ownership.LTI, y=HHI, group=Manager.autonomy, col=Manager.autonomy)) +
+ggplot(TEMP2, aes(x=Ownership.LTI, y=HHI, group=Manager.autonomy, col=Manager.autonomy)) +
   facet_wrap(time~., nrow = 1) +
   geom_smooth(method = "loess", se = F) +
   scale_color_manual(values = c("red", "blue", "black")) +

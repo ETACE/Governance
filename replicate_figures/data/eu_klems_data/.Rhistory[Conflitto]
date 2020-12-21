@@ -1,0 +1,512 @@
+round(prop.table(table(mpg$trans, mpg$drv)),3)
+round(prop.table(table(mpg$trans, mpg$drv)),2)
+sum(prop.table(table(mpg$trans, mpg$drv)))
+# histograms (approximate distribution)
+hist(mpg$cty)
+hist(mpg$cty,
+xlab   = "Miles Per Gallon (City)",
+main   = "Histogram of MPG (City)",
+breaks = 12,
+col    = "red",
+border = "blue"
+)
+# boxplot (to better check for outliers, average, quartiles)
+boxplot(mpg$hwy ~ mpg$drv,
+xlab = "Drivetrain",
+ylab = "Miles per gallon",
+main = "MPG vs Drivetrain",
+pch  = 20,
+cex  = 2,
+col  = "darkorange",
+border = "dodgerblue"
+)
+# boxplot (to better check for outliers, average, quartiles)
+boxplot(mpg$hwy ~ mpg$drv,
+xlab = "Drivetrain",
+ylab = "Miles per gallon",
+main = "MPG vs Drivetrain",
+pch  = 20,
+cex  = 1,
+col  = "darkorange",
+border = "dodgerblue"
+)
+# boxplot (to better check for outliers, average, quartiles)
+boxplot(mpg$hwy ~ mpg$drv,
+xlab = "Drivetrain",
+ylab = "Miles per gallon",
+main = "MPG vs Drivetrain",
+pch  = 20,
+cex  = 1,
+col  = "orange",
+border = "blue"
+)
+dark
+# boxplot (to better check for outliers, average, quartiles)
+boxplot(mpg$hwy ~ mpg$drv,
+xlab = "Drivetrain",
+ylab = "Miles per gallon",
+main = "MPG vs Drivetrain",
+pch  = 20,
+cex  = 1,
+col  = "darkorange",
+border = "dodgerblue"
+)
+# boxplot (to better check for outliers, average, quartiles)
+boxplot(mpg$hwy ~ mpg$drv,
+xlab = "Drivetrain",
+ylab = "Miles per gallon",
+main = "MPG vs Drivetrain",
+pch  = 20,
+cex  = 1,
+col  = "darkorange",
+border = "dodgerblue"
+)
+# scatterplots (to check pairs of occurrences and visual correlations)
+plot(mpg$hwy, mpg$displ)
+plot(data=mpg, x=hwy, y=displ)
+plot(data=mpg, x=hwy, y=displ, col="red")
+plot(data=mpg, hwy~displ, col="red")
+plot(data=mpg, hwy~displ, col="dodgerblue")
+plot(data =mpg,
+hwy~displ,
+xlab = "engine displacement",
+ylab = "miles per gallon",
+main = "mpg vs displacement",
+pc = 20,
+cex = 1
+col  ="dodgerblue"
+)
+plot(data =mpg,
+hwy~displ,
+xlab = "engine displacement",
+ylab = "miles per gallon",
+main = "mpg vs displacement",
+pc = 20,
+cex = 1,
+col  ="dodgerblue"
+)
+plot(data =mpg,
+hwy~displ,
+xlab = "engine displacement",
+ylab = "miles per gallon",
+main = "mpg vs displacement",
+pc = 15,
+cex = 1,
+col  ="dodgerblue"
+)
+plot(data =mpg,
+hwy~displ,
+xlab = "engine displacement",
+ylab = "miles per gallon",
+main = "mpg vs displacement",
+pc = 12,
+cex = 1,
+col  ="dodgerblue"
+)
+?pc
+plot(data =mpg,
+hwy~displ,
+xlab = "engine displacement",
+ylab = "miles per gallon",
+main = "mpg vs displacement",
+pc = 8,
+cex = 1,
+col  ="dodgerblue"
+)
+plot(data =mpg,
+hwy~displ,
+xlab = "engine displacement",
+ylab = "miles per gallon",
+main = "mpg vs displacement",
+pc = 8,
+cex = 2,
+col  ="dodgerblue"
+)
+plot(data =mpg,
+hwy~displ,
+xlab = "engine displacement",
+ylab = "miles per gallon",
+main = "mpg vs displacement",
+pc = 20,
+cex = 1,
+col  ="dodgerblue"
+)
+# histograms (approximate distribution)
+hist(mpg$cty)
+hist(mpg$cty,
+xlab   = "Miles Per Gallon (City)",
+main   = "Histogram of MPG (City)",
+breaks = 12,
+col    = "red",
+border = "blue"
+)
+# ggplot2 ====
+ggplot(data = mpg, mapping = aes(x=displ, y=hwy)) +
+geom_point(col = "blue", size = 2) +
+xlab("Displacement") +
+ylab("MpG (highway)") +
+ggtitle("MpG (highway) vs Displacement")
+# ggplot2 ====
+ggplot(data = mpg, mapping = aes(x=displ, y=hwy)) +
+geom_point(col = "blue", size = 2) +
+xlab("Displacement") +
+ylab("MpG (highway)") +
+ggtitle("MpG (highway) vs Displacement") +
+theme_dark()
+# ggplot2 ====
+ggplot(data = mpg, mapping = aes(x=displ, y=hwy)) +
+geom_point(col = "blue", size = 2) +
+xlab("Displacement") +
+ylab("MpG (highway)") +
+ggtitle("MpG (highway) vs Displacement") +
+theme_minimal()
+# ggplot2 ====
+ggplot(data = mpg, mapping = aes(x=displ, y=hwy)) +
+geom_point(col = "blue", size = 2) +
+xlab("Displacement") +
+ylab("MpG (highway)") +
+ggtitle("MpG (highway) vs Displacement") +
+theme_bw()
+# tutorials (not sure they will work) ====
+library(ScPoEconometrics)
+runTutorial('chapter2')
+runTutorial('correlation')
+launchApp("corr_continuous")
+?cov
+x <- rnorm(100, mean = 0, sd = 1)
+y <- x+rnorm(100, 0, 0.001)
+cov(x,y)
+y <- x + rnorm(100, 100, 1)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- x + rnorm(100, 100, 1)
+cov(x,y)
+set.seed(1)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- x + rnorm(100, 100, 1)
+cov(x,y)
+x <- rnorm(100, mean = 10, sd = 1)
+y <- x + rnorm(100, 100, 1)
+cov(x,y)
+set.seed(1)
+x <- rnorm(100, mean = 10, sd = 1)
+y <- x + rnorm(100, 100, 1)
+cov(x,y)
+cor(x,y)
+x <- rnorm(100, mean = 10, sd = 1)
+y <- x
+cov(x,y)
+cor(x,y)
+y <- x + rnorm(100, mean = 0, sd = 0.0001)
+set.seed(1)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- x + rnorm(100, mean = 0, sd = 0.0001)
+cov(x,y)
+cor(x,y)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- x + rnorm(100, mean = 0, sd = 0.0001)
+cov(x,y)
+cor(x,y)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- rnorm(100, mean = 0, sd = 1)
+plot(y~x)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- x+rnorm(100, mean = 0, sd = 1)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- 0.9*x+rnorm(100, mean = 0, sd = 0.1)
+plot(y~x)
+plot(y~x)
+cov(x,y)
+cor(x,y)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- 0.9*x + rnorm(100, mean = 0, sd = 1)
+plot(y~x)
+cov(x,y)
+cor(x,y)
+set.seed(1)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- 0.9*x + rnorm(100, mean = 0, sd = 0.1)
+plot(y~x)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- x + rnorm(100, mean = 0, sd = 0.1)
+plot(y~x)
+cov(x,y)
+cor(x,y)
+y <- rnorm(100, mean = 0, sd = 1)
+set.seed(1)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- rnorm(100, mean = 0, sd = 1)
+plot(y~x)
+plot(y~x)
+cov(x,y)
+cor(x,y)
+x_n <- x/sd(x)
+y_n <- x/sd(x)
+cov(x_n,y_n)
+y_n <- y/sd(y)
+cov(x_n,y_n)
+x <- rnorm(100, mean = 0, sd = 100)
+y <- rnorm(100, mean = 0, sd = 1)
+plot(y~x)
+x <- rnorm(100, mean = 0, sd = 1)
+set.seed(1)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- x + rnorm(100, mean = 0, sd = 10)
+plot(y~x)
+set.seed(1)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 10)
+plot(y~x)
+set.seed(1)
+x <- rnorm(100, mean = 0, sd = 1)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 10)
+plot(y~x)
+cov(x,y)
+cor(x,y)
+x <- rnorm(100, mean = 0, sd = 10)
+set.seed(1)
+x <- rnorm(100, mean = 0, sd = 10)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 10)
+plot(y~x)
+cov(x,y)
+cor(x,y)
+set.seed(1)
+x <- rnorm(100, mean = 0, sd = 2)
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(100, mean = 0, sd = 2)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 2)
+plot(y~x)
+plot(y~x, col = "dodgerblue")
+plot(y~x, col = "dodgerblue", pe = 20)
+plot(y~x, col = "dodgerblue", pc = 20)
+plot(y~x, col = "dodgerblue", pc = 20)
+x <- rnorm(100, mean = 0, sd = 1.5)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 1.5)
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(100, mean = 0, sd = 1.5)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 1.5)
+plot(y~x, col = "dodgerblue", pc = 20)
+cov(x,y)
+# scatterplots (to check pairs of occurrences and visual correlations)
+plot(mpg$hwy, mpg$displ)
+plot(data =mpg,
+hwy~displ,
+xlab = "engine displacement",
+ylab = "miles per gallon (highway)",
+main = "mpg on highway vs displacement",
+pc = 20,
+cex = 1,
+col  ="dodgerblue"
+)
+plot(y~x, pc = 20, col = "dodgerblue")
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(100, mean = 0, sd = 1.5)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 1.5)
+plot(y~x, pc = 20, col = "dodgerblue")
+plot(y~x, pc=20)
+plot(y~x, pc=20)
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(100, mean = 0, sd = 1.5)
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(100, mean = 0, sd = 1.5)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 1.5)
+plot(y~x, pc=20)
+plot(y~x)
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(100, mean = 0, sd = 1.5)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 1.5)
+plot(y~x)
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(100, mean = 0, sd = 1.5)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 1.5)
+plot(y~x)
+?plot
+plot(x,y,pc=20)
+set.seed(1) # fix the random numbers so that they are all the same
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(100, mean = 0, sd = 1.5)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 1.5)
+plot(x,y,pc=20)
+plot(x,y)
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(100, mean = 0, sd = 1.5)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 1.5)
+plot(x,y)
+cov(x,y)
+cor(x,y)
+x <- rnorm(100, mean = 0, sd = 100)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 100)
+plot(x,y)
+cov(x,y)
+cor(x,y)
+x <- rnorm(1000, mean = 0, sd = 100)
+y <- 0.9 * x + rnorm(100, mean = 0, sd = 10)
+plot(x,y)
+plot(x,y)
+cov(x,y)
+cor(x,y)
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(1000, mean = 0, sd = 100)
+y <- 0.9 * x + rnorm(1000, mean = 0, sd = 100)
+plot(x,y)
+cov(x,y)
+cor(x,y)
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(1000, mean = 0, sd = 100)
+y <- x + rnorm(1000, mean = 0, sd = 100)
+plot(x,y)
+cov(x,y)
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(1000, mean = 0, sd = 100)
+y <- x + rnorm(1000, mean = 0, sd = 100)
+x <- rnorm(1000, mean = 0, sd = 100)
+y <- rnorm(1000, mean = 0, sd = 100)
+plot(x,y)
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(1000, mean = 0, sd = 100)
+y <- rnorm(1000, mean = 0, sd = 100)
+plot(x,y)
+cov(x,y)
+y <- rnorm(100, mean = 0, sd = 100)
+x <- rnorm(100, mean = 0, sd = 100)
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(100, mean = 0, sd = 100)
+y <- rnorm(100, mean = 0, sd = 100)
+plot(x,y)
+cov(x,y)
+cor(x,y)
+x_n <- x/sd(x)
+y_n <- y/sd(y)
+cov(x_n,y_n)
+range(x)
+range(x)/4
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(10000, mean = 0, sd = 100)
+y <- rnorm(10000, mean = 0, sd = 100)
+plot(x,y)
+cov(x,y)
+cor(x,y)
+x_n <- x/sd(x)
+y_n <- y/sd(y)
+cov(x_n,y_n)
+range(x)/4
+range(x)
+sd_x = 0.95 * range(x) / 4
+sd_x
+x <- rnorm(1000000, mean = 0, sd = 100)
+y <- rnorm(1000000, mean = 0, sd = 100)
+plot(x,y)
+cov(x,y)
+cor(x,y)
+sd_x = 0.95 * range(x) / 4
+sd_x
+sd_x = range(x) / 4
+sd_x
+sd_x = 0.95 * range(x) / 4
+set.seed(1) # fix the random numbers so that they are all the same
+x <- rnorm(100, mean = 0, sd = 100)
+y <- rnorm(100, mean = 0, sd = 100)
+plot(x,y)
+cov(x,y)
+cor(x,y)
+x_n <- x/sd(x)
+y_n <- y/sd(y)
+cov(x_n,y_n)
+sd_x = 0.95 * range(x) / 4
+sd_x <- 0.95 * range(x) / 4
+sd_x
+sd_x <- diff(0.95 * range(x) / 4)
+sd_x
+sd_x <- diff(range(x) / 4)
+sd_x
+# Author:   Mattia Guerini
+# Title:    Policy Brief OFCE 2019 - The italian Job
+# Updated:  2019, February 09
+# preparation of R settings ====
+# clean environment
+rm(list = ls())
+# load libraries
+library(tidyverse)
+# load own written functions
+setwd("~/Google Drive/2018_revueOFCE/code_R/")
+source("mg_functions.R")
+# fix auxiliary useful variables
+years <- seq(as.Date("1970/12/31"), as.Date("2015/12/31"), "years")
+# import euklems data ====
+# load capital tables and output tables for Italy only
+setwd("~/Google Drive/policyOfce_Italy/eu_klems_data/")
+capital <- lapply("IT_capital_17i.xlsx", read_excel_allsheets)
+output <- lapply("IT_output_17i.xlsx", read_excel_allsheets)
+# prepare separate cleaned datasets ====
+# total value added
+valueAdded <- extract_euklems(
+data_list = output,
+variable = "VA_QI",
+countries = "IT",
+years = years,
+output = T,
+time0 = "1995/01/01",
+nace_cod = "TOT"
+)
+# compensation of employees
+compEmplo <- extract_euklems(
+data_list = output,
+variable = "COMP",
+countries = "IT",
+years = years,
+output = T,
+time0 = "1995/01/01",
+nace_cod = "TOT"
+)
+# labour productivity
+labourProd <- extract_euklems(
+data_list = output,
+variable = "LP_I",
+countries = "IT",
+years = years,
+output = T,
+time0 = "1995/01/01",
+nace_cod = "TOT"
+)
+# total factor productivity
+totfacProd <- extract_euklems(
+data_list = output,
+variable = "TFPlp1_I",
+countries = "IT",
+years = years,
+output = T,
+time0 = "1995/01/01",
+nace_cod = "TOT"
+)
+# plot variables of interest ====
+ggplot(data = valueAdded,
+mapping = aes(x = year, y = l_value)) +
+geom_line() +
+geom_point() +
+ggtitle("Gross value added") +
+xlab("years") +
+ylab("log-volume (2010 prices)") +
+theme_bw()
+ggplot(data = compEmplo,
+mapping = aes(x = year, y = l_value)) +
+geom_line() +
+geom_point() +
+ggtitle("Compensation of employees") +
+xlab("years") +
+ylab("millions of national currency") +
+theme_bw()
+ggplot(data = labourProd,
+mapping = aes(x = year, y = value)) +
+geom_line() +
+geom_point() +
+ggtitle("Gross value added per hour worked") +
+xlab("years") +
+ylab("volume indices, 2010 = 100") +
+theme_bw()
+ggplot(data = totfacProd,
+mapping = aes(x = year, y = value)) +
+geom_line() +
+geom_point() +
+ggtitle("TFP (value added per hour worked based)") +
+xlab("years") +
+ylab("2010 = 100") +
+theme_bw()
