@@ -7,7 +7,6 @@ rm(list = ls())
 
 # this code takes data
 library(tidyverse)
-library(ggtern)
 library(viridis)
 library(RColorBrewer)
 library(reshape2)
