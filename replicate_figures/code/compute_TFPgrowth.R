@@ -12,7 +12,7 @@ library(reshape2)
 
 # import own written functions
 setwd("~/Documents/GitHub/Governance/replicate_figures/code/")
-source("mg_functions.R")
+source("euklems_functions.R")
 
 # set auxiliary useful variables
 years <- seq(as.Date("1970/12/31"), as.Date("2015/12/31"), "years")
