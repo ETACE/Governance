@@ -47,3 +47,4 @@ ggplot(data_both, aes(x=time)) +
         legend.text = element_text(size = 13),
         strip.text = element_text(face="bold", size=13),
         legend.position = "bottom")
+ggsave("~/Documents/GitHub/Governance/replicate_figures/figs/fig1.pdf")

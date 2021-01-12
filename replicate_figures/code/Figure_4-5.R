@@ -127,6 +127,7 @@ ggplot(TEMP2, aes(x=Ownership.LTI, y=Prod.Growth, group=Manager.autonomy, col=Ma
         legend.position = "bottom",
         legend.background = element_rect(linetype="solid", colour ="black", size = .8)
   )
+ggsave("~/Documents/GitHub/Governance/replicate_figures/figs/fig4.pdf")
 
 # splines for the herfindahl-hirschman index -----------------------------------
 variable <- "av_herfindahl_index"
@@ -212,3 +213,4 @@ ggplot(TEMP2, aes(x=Ownership.LTI, y=HHI, group=Manager.autonomy, col=Manager.au
         legend.position = "bottom",
         legend.background = element_rect(linetype="solid", colour ="black", size = .8)
   )
+ggsave("~/Documents/GitHub/Governance/replicate_figures/figs/fig5.pdf")

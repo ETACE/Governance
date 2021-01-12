@@ -288,6 +288,7 @@ ggplot(TEMP_ALL_EQ2, aes(x=Ownership.LTI, y=value, group=Manager.autonomy, col=M
         legend.position = "bottom",
         legend.background = element_rect(linetype="solid", colour ="black", size = .8)
   )
+ggsave("~/Documents/GitHub/Governance/replicate_figures/figs/fig7.pdf")
 
 # keep only variables for figure later on
 THE_PROD <- TEMP_ALL_TRI
@@ -576,6 +577,7 @@ ggplot(TEMP_ALL_EQ2, aes(x=Ownership.LTI, y=value, group=Manager.autonomy, col=M
         legend.position = "bottom",
         legend.background = element_rect(linetype="solid", colour ="black", size = .8)
   )
+ggsave("~/Documents/GitHub/Governance/replicate_figures/figs/fig8.pdf")
 
 # keep only variables for figure later on
 THE_HHI <- TEMP_ALL_TRI
@@ -640,6 +642,7 @@ ggplot(compgro2, aes(x=(1-hhi), y=prod_growth, col = time, group = time)) +
         legend.text = element_text(size = 13),
         strip.text = element_text(face="bold", size=13),
         legend.position = "right")
+ggsave("~/Documents/GitHub/Governance/replicate_figures/figs/fig9.pdf")
 
 # pooled with colors for different periods
 ggplot(compgro2, aes(x=(1-hhi), y=prod_growth)) +
@@ -659,3 +662,4 @@ ggplot(compgro2, aes(x=(1-hhi), y=prod_growth)) +
         legend.text = element_text(size = 13),
         strip.text = element_text(face="bold", size=13),
         legend.position = "right")
+ggsave("~/Documents/GitHub/Governance/replicate_figures/figs/fig10.pdf")

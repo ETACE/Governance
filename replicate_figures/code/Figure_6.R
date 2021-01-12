@@ -73,3 +73,4 @@ ggplot(df_full_bar, aes(x=time, y=exp_jump_diff, group = time, col = time, fill 
         legend.background = element_rect(linetype="solid", colour ="black", size = .8),
         legend.text = element_text(size = 14)
   )
+ggsave("~/Documents/GitHub/Governance/replicate_figures/figs/fig6.pdf")

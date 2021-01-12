@@ -69,4 +69,5 @@ g <- tfp %>%
   filter(variable == "TOT") %>%                         # total industry
   summarise(average = mean(dl_value, na.rm = T)) %>% 
   as.numeric()
+g
 
