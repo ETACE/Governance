@@ -10,7 +10,7 @@ library(reshape2)
 rm(list = ls())
 
 # import and clean data --------------------------------------------------------
-setwd("~/Google Drive/2019_buybackFinancialization/Replication/")
+setwd("~/Documents/GitHub/Governance/replicate_figures/data/")
 load("data_sim_experiment.Rdata")
 
 rm(i, p0, p1, p2, par0, par1, par2, parameter0, parameter1, parameter2, pathdata, runs, parameter_list,

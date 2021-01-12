@@ -18,4 +18,7 @@ source("Figure_1.R")
 source("Figure_2-3.R")
 source("Figure_4-5.R")
 source("Figure_6.R")
-source("Figure_7-10.R.R")
+source("Figure_7-10.R")
+
+# plot also the triangles
+source("Figure_2-3_triangles.R")

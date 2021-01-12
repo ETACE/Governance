@@ -10,8 +10,8 @@ library(RColorBrewer)
 rm(list = ls())
 
 # Import and clean data ====
-setwd("~/Google Drive/2019_buybackFinancialization/dataNizza_20191115/")
-load("data_time_evolution.Rdata")
+setwd("~/Documents/GitHub/Governance/replicate_figures/data/")
+load("triangle_plot.Rdata")
 
 rm(i, p1, p2, par1, par2, parameter1, parameter2, pathdata, pathfigs, probe, runs, parameter_list,
    gamplot, getdata, retrieve_data)
