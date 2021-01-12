@@ -13,16 +13,16 @@ rm(list = ls())
 # import data and stationarity test --------------------------------------------
 setwd("~/Documents/GitHub/Governance/replicate_figures/data/")
 
-data_hhi <- read_csv("batch_mean_herfindahl_index.csv") %>%
+data_hhi <- read_csv("herfindahl.csv") %>%
   setNames(c("time","HHI")) %>%
   filter(time > 20000 & time <= 50000)
 
 adf.test(data_hhi$HHI, alternative = "stationary")
 
-data_hhi <- read_csv("batch_mean_herfindahl_index.csv") %>%
+data_hhi <- read_csv("herfindahl.csv") %>%
   setNames(c("time","HHI"))
 
-data_nfirms <- read_csv("batch_mean_num_active_firms.csv") %>%
+data_nfirms <- read_csv("num_firms.csv") %>%
   setNames(c("time","N_firms"))
 
 data_both <- bind_cols(data_hhi, data_nfirms[,2])
